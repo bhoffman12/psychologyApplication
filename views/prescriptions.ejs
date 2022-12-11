@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/header'); -%>
+
+    <body>
+        <div class="prescription-wrap">
+            <div class="prescription-content">
+        <%- include('layouts/navbar'); -%>
+            <!-- Page Header-->
+            <header>
+                <div class="text-left py-5">
+                    <h2>Prescriptions</h2>
+                </div>
+            </header>
+            <!-- Main Content-->
+            <main class="mb-5 container">
+                <!-- Button trigger modal -->
+                <% if (role==='patient' ) { %>
+                    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Requet Prescription
+                    </button>
+                    <% } %>
+                    <% if (role==='admin' ) { %>
+                        <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Create Prescription
+                        </button>
+                        <% } %>
+
+
+                        <h5>Prescription Request List:</h5>
+                        <div class="table-responsive">
+                            <table class="table align-middle table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Patient Name</th>
+                                        <th scope="col">Patient Birthdate</th>
+                                        <th scope="col">Prescription Name</th>
+                                        <th scope="col">Prescription Dose</th>
+                                        <th scope="col">Prescribing Doctor</th>
+                                        <% if (role==='admin' ) { %>
+                                        <th scope="col">Action</th>
+                                        <% } %>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% prescriptionList.forEach(function(prescription,index){ %>
+                                        <tr>
+                                            <td>
+                                                <%= prescription.patientName %>
+                                            </td>
+                                            <td>
+                                                <%= prescription.patientBirth %>
+                                            </td>
+                                            <td>
+                                                <%= prescription.prescriptionName %>
+                                            </td>
+                                            <td>
+                                                <%= prescription.prescriptionDose %>
+                                            </td>
+                                            <td>
+                                                <%= prescription.doctor %>
+                                            </td>
+                                            <% if (role==='admin' ) { %>
+                                            <td>
+                                                <a class="me-3 text-decoration-none"
+                                                    href="/cancel-prescription/<%= prescription._id %>">
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        Remove
+                                                    </button>
+                                                </a>
+                                                <a href="/updatePrescription/<%= prescription._id %>">
+                                                    <button type="button" class="btn btn-secondary btn-sm">
+                                                        Update
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            <% } %>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% if (prescriptionList.length===0 ) { %>
+                            <p>No prescriptions found</p>
+                            <% } %>
+
+            </main>
+
+            <%- include('partials/createPrescriptionModal'); -%>
+                <%- include('partials/updatePrescriptionModal'); -%>
+            </div>
+            </div>
+            <%- include('layouts/footer'); -%>
+    </body>
+
+</html>

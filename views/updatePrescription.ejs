@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/header'); -%>
+
+    <body>
+        <%- include('layouts/navbar'); -%>
+            <!-- Page Header-->
+            <header class="masthead">
+                <div class="text-center py-5">
+                    <h5>Update your prescription</h5>
+                </div>
+            </header>
+            <!-- Main Content-->
+            <main class="mb-5 container">
+                <div class="row justify-content-center ">
+                    <div class="col-md-6 p-5" style="background: #f2f2f2;">
+                        <form action="/prescription/<%= prescription._id %>" method="POST">
+                            <div class="prescription">
+                                <div class="prescription">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="pb-2">Patient Name:</label>
+                                            <input required value="<%= prescription.patientName %>" type="text"
+                                                class="form-control mb-3" placeholder="John Doe" id="patientName" name="patientName">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="pb-2">Patient Birthdate:</label>
+                                            <input required value="<%= prescription.patientBirth %>" type="date"
+                                                class="form-control mb-3" placeholder="MM/DD/YYYY" id="patientBirth" name="patientBirth">
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="pb-2">Prescription Name:</label>
+                                        <input required value="<%= prescription.prescriptionName %>" type="text"
+                                            class="form-control mb-3" placeholder="Advil" id="prescriptionName" name="prescriptionName">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="pb-2">Prescription Dose:</label>
+                                        <input required value="<%= prescription.prescriptionDose %>" type="text"
+                                            class="form-control mb-3" placeholder="1 ML" id="prescriptionDose" name="prescriptionDose">
+                                    </div>
+                                </div>
+                                <label class="pb-2">Doctors Name:</label>
+                                <select required name="doctor" class="form-select mb-3">
+                                    <% doctorList.forEach(function(item,index){ %>
+                                        <option <%=item.fullname===prescription.doctor ? 'selected' : '' %>
+                                            value="<%= item.fullname %>">
+                                                <%= item.fullname %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="d-grid gap-2 pt-2">
+                                <button class="btn btn-success" type="submit">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+            <%- include('layouts/footer'); -%>
+    </body>
+
+</html>
